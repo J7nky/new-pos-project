@@ -1,28 +1,43 @@
 import React, { useState } from 'react';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { SupplierProvider } from './contexts/SupplierContext';
+import { FinanceProvider } from './contexts/FinanceContext';
+import { LoginForm } from './components/LoginForm';
 import { Dashboard } from './components/Dashboard';
-import { POSInterface } from './components/POSInterface';
+import { EnhancedPOSInterface } from './components/EnhancedPOSInterface';
 import { InventoryManager } from './components/InventoryManager';
 import { CustomerManager } from './components/CustomerManager';
-import { Reports } from './components/Reports';
+import { SupplierManager } from './components/SupplierManager';
+import { FinanceManager } from './components/FinanceManager';
+import { EnhancedReports } from './components/EnhancedReports';
 import { Settings } from './components/Settings';
 import { Navigation } from './components/Navigation';
 import { POSProvider } from './contexts/POSContext';
 
-function App() {
+const AppContent: React.FC = () => {
+  const { state: authState } = useAuth();
   const [activeTab, setActiveTab] = useState('dashboard');
+
+  if (!authState.isAuthenticated) {
+    return <LoginForm />;
+  }
 
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
         return <Dashboard />;
       case 'pos':
-        return <POSInterface />;
+        return <EnhancedPOSInterface />;
       case 'inventory':
         return <InventoryManager />;
       case 'customers':
         return <CustomerManager />;
+      case 'suppliers':
+        return <SupplierManager />;
+      case 'finance':
+        return <FinanceManager />;
       case 'reports':
-        return <Reports />;
+        return <EnhancedReports />;
       case 'settings':
         return <Settings />;
       default:
@@ -31,14 +46,26 @@ function App() {
   };
 
   return (
-    <POSProvider>
-      <div className="min-h-screen bg-gray-50">
-        <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
-        <main className="ml-64 p-6">
-          {renderContent()}
-        </main>
-      </div>
-    </POSProvider>
+    <div className="min-h-screen bg-gray-50">
+      <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
+      <main className="ml-64 p-6">
+        {renderContent()}
+      </main>
+    </div>
+  );
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <POSProvider>
+        <SupplierProvider>
+          <FinanceProvider>
+            <AppContent />
+          </FinanceProvider>
+        </SupplierProvider>
+      </POSProvider>
+    </AuthProvider>
   );
 }
 
