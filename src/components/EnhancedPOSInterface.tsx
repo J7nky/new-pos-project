@@ -1,23 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { usePOS } from '../contexts/POSContext';
 import { useAuth } from '../contexts/AuthContext';
-import { 
-  Search, 
-  Plus, 
-  Minus, 
-  Trash2, 
-  User, 
-  CreditCard,
-  DollarSign,
-  Smartphone,
-  ScanLine,
-  ShoppingCart,
-  Receipt,
-  Scale,
-  Calculator,
-  Tabs,
-  X
-} from 'lucide-react';
+import { Search, Plus, Minus, Trash2, User, CreditCard, DollarSign, Smartphone, ScanLine, ShoppingCart, Receipt, Scale, Calculator, Table as Tabs, X } from 'lucide-react';
 
 interface CartTab {
   id: string;
