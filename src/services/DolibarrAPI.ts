@@ -395,3 +395,5 @@ class DolibarrAPIService {
 }
 
 export { DolibarrAPIService, type DolibarrConfig, type DolibarrProduct, type DolibarrCustomer, type DolibarrSupplier };
+
+export { DolibarrAPIService }

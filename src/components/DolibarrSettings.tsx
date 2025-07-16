@@ -1,17 +1,6 @@
 import React, { useState } from 'react';
 import { useDolibarr } from '../contexts/DolibarrContext';
-import { 
-  Settings, 
-  Wifi, 
-  WifiOff, 
-  RefreshCw, 
-  CheckCircle, 
-  XCircle, 
-  AlertCircle,
-  Database,
-  Sync,
-  Clock
-} from 'lucide-react';
+import { Settings, Wifi, WifiOff, RefreshCw, CheckCircle, XCircle, AlertCircle, Database, FolderSync as Sync, Clock } from 'lucide-react';
 
 export const DolibarrSettings: React.FC = () => {
   const { 
