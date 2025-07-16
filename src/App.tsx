@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { SupplierProvider } from './contexts/SupplierContext';
 import { FinanceProvider } from './contexts/FinanceContext';
+import { DolibarrProvider } from './contexts/DolibarrContext';
 import { LoginForm } from './components/LoginForm';
 import { Dashboard } from './components/Dashboard';
 import { EnhancedPOSInterface } from './components/EnhancedPOSInterface';
@@ -58,13 +59,15 @@ const AppContent: React.FC = () => {
 function App() {
   return (
     <AuthProvider>
-      <POSProvider>
-        <SupplierProvider>
-          <FinanceProvider>
-            <AppContent />
-          </FinanceProvider>
-        </SupplierProvider>
-      </POSProvider>
+      <DolibarrProvider>
+        <POSProvider>
+          <SupplierProvider>
+            <FinanceProvider>
+              <AppContent />
+            </FinanceProvider>
+          </SupplierProvider>
+        </POSProvider>
+      </DolibarrProvider>
     </AuthProvider>
   );
 }

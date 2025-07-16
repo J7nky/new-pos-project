@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Settings as SettingsIcon, Printer, Wifi, Receipt, DollarSign, User } from 'lucide-react';
+import { Settings as SettingsIcon, Printer, Wifi, Receipt, DollarSign, User, Database } from 'lucide-react';
+import { DolibarrSettings } from './DolibarrSettings';
 
 export const Settings: React.FC = () => {
   const [activeTab, setActiveTab] = useState('general');
@@ -23,7 +24,8 @@ export const Settings: React.FC = () => {
     { id: 'general', label: 'General', icon: SettingsIcon },
     { id: 'receipt', label: 'Receipt', icon: Receipt },
     { id: 'printer', label: 'Printer', icon: Printer },
-    { id: 'backup', label: 'Backup', icon: Wifi }
+    { id: 'backup', label: 'Backup', icon: Wifi },
+    { id: 'dolibarr', label: 'Dolibarr ERP', icon: Database }
   ];
 
   return (
@@ -321,6 +323,10 @@ export const Settings: React.FC = () => {
                 </div>
               </div>
             </div>
+          )}
+
+          {activeTab === 'dolibarr' && (
+            <DolibarrSettings />
           )}
         </div>
       </div>

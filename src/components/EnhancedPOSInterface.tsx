@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { usePOS } from '../contexts/POSContext';
 import { useAuth } from '../contexts/AuthContext';
+import { useDolibarr } from '../contexts/DolibarrContext';
 import { Search, Plus, Minus, Trash2, User, CreditCard, DollarSign, Smartphone, ScanLine, ShoppingCart, Receipt, Scale, Calculator, Table as Tabs, X } from 'lucide-react';
 
 interface CartTab {
@@ -14,6 +15,7 @@ interface CartTab {
 export const EnhancedPOSInterface: React.FC = () => {
   const { state, dispatch } = usePOS();
   const { state: authState } = useAuth();
+  const { syncSale } = useDolibarr();
   const [searchTerm, setSearchTerm] = useState('');
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -164,6 +166,14 @@ export const EnhancedPOSInterface: React.FC = () => {
     };
 
     dispatch({ type: 'PROCESS_SALE', payload: sale });
+    
+    // Sync with Dolibarr if configured
+    try {
+      await syncSale(sale);
+    } catch (error) {
+      console.warn('Failed to sync sale with Dolibarr:', error);
+      // Continue with local processing even if Dolibarr sync fails
+    }
     
     // Clear the active tab
     updateTabItems(activeTabId, []);
